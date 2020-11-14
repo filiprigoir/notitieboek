@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NotitielijstService } from './notitielijst.service';
-import { Users } from './users/users';
 
 @Component({
   selector: 'app-root',
@@ -10,22 +9,15 @@ import { Users } from './users/users';
 export class AppComponent {
   title = 'notieboek';
 
-  constructor(private NotitielijstService: NotitielijstService) {
+  constructor(private notitielijstService: NotitielijstService) {
 
-  let addUser = new Users();
-  addUser.name = "Filip rigoir";
-
-  this.NotitielijstService.setUser(addUser).subscribe(result => {
+  this.notitielijstService.setUser("Filip Rigoir").subscribe((result) => {
     console.log('Inserted ID:', result);
   });
 
-   NotitielijstService.getUsers().subscribe((data) => {
+  this.notitielijstService.getUsers().subscribe((data) => {
       console.log("info:" + data)       
     });
-  }
 
-  
+  }  
 }
-
-
-

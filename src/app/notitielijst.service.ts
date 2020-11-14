@@ -2,23 +2,21 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, retry } from 'rxjs/Operators'
-import { Users } from './users/users';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotitielijstService {
 
-  constructor(private HttpClient: HttpClient) {} 
-    
+  constructor(private Http: HttpClient) {} 
+  
   getUsers = () => {
-    return this.HttpClient.get('https://delicious-mercury-ricotta.glitch.me/users');
+    return this.Http.get('https://delicious-mercury-ricotta.glitch.me/users');
   } 
   
- setUser = (user: Users) =>  {
+ setUser = (user: string) =>  {
     let headers = { 'content-type': 'Access-Control-Allow-Origin'}  
-    return this.HttpClient.post('https://delicious-mercury-ricotta.glitch.me/users', user, {'headers': headers})
+    return this.Http.post('https://delicious-mercury-ricotta.glitch.me/users', user, {'headers': headers})
   }
-
 }
 
