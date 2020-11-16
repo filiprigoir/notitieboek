@@ -11,12 +11,28 @@ export class AppComponent {
 
   constructor(private notitielijstService: NotitielijstService) {
 
-  this.notitielijstService.setUser("Filip Rigoir").subscribe((result) => {
-    console.log('Inserted ID:', result);
-  });
+    this.notitielijstService.setUser("Filip Rigoir").subscribe((data) => {
+      console.log('Inserted ID:', data);
+    });
 
-  this.notitielijstService.getUsers().subscribe((data) => {
-      console.log("info:" + data)       
+    this.notitielijstService.getUsers().subscribe((data) => {
+        console.log("info:" + data)       
+      });
+
+    this.notitielijstService.deleteUser(5).subscribe((data) => {
+      console.log("deleted:" + data)  
+    });
+
+    this.notitielijstService.deleteNote(1).subscribe((data) => {
+      console.log("deleted:" + data)  
+    });
+
+    this.notitielijstService.setNotitie(8, "Mijn eerste notitie").subscribe((data) => {
+      console.log("Inserted:" + data)  
+    });
+
+    this.notitielijstService.updateNotitie(18, "Mijn eerste notitie").subscribe((data) => {
+      console.log("Update:" + data)  
     });
 
   }  
