@@ -1,0 +1,45 @@
+#form {
+    margin-right:10px;
+    padding:25px 25px 0px 25px;
+    max-width:100%;
+    border-radius:8px;
+    background-color:rgb(238, 247, 238);
+    border:1px solid rgb(133,173,173);
+  }
+.blok {
+  max-width:100%;
+  text-align:left;
+}
+.vraag {
+  font-size:1em;
+  font-weight:bold;
+}
+.veld { 
+  width:100%;
+  height:30px;
+  padding:0px;
+  margin:15px 0 0 0px;
+}
+.notitieveld {
+  width:100%;
+  height:50px;
+  padding:0px;
+  margin:15px 0 0 0px;
+}
+.select {
+  width:100%;
+  height:30px;
+  padding:5px;
+  margin:15px 0 0 0px;
+}
+.button {
+  height:35px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(55, 173, 124);
+  }
+.succes {
+  color: seagreen;
+}
+.error {
+  color: red;
+}

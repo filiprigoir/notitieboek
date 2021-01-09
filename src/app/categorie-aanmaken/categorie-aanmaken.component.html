@@ -1,0 +1,48 @@
+
+<div id="map">
+  <div class="left"> <img src="assets/img/map.gif" alt="Map" title="Map" class="space-icons"> </div>  
+  <div class="padding2">      
+    <a [title]="homeLink.title" [routerLink]="[homeLink.url]"> 
+      {{ homeLink.title }} </a> » Nieuw categorie aanmaken 
+  </div>
+</div>
+   
+<main class="text-body">
+  <div id="main-right">
+      <div id="box-right-tablet">
+          <app-statistieken></app-statistieken>
+
+          <div id="category">
+              <div class="display-titel"><b>Aangemaakte Categorieën</b></div>
+                  <div *ngIf="categories.length > 0; else geenCategories" class="display-info">
+                    <div *ngFor="let category of categories; let i = index">
+                      {{i+1}}). {{category.name}}
+                    </div>
+                  </div> 
+
+                  <ng-template #geenCategories>
+                    <div class="display-info">Nog geen categorieën ingevoegd</div>
+                  </ng-template>
+          </div>
+
+          <app-laatste5-users></app-laatste5-users>
+
+        </div> 
+  </div>
+  <div id="main-left">
+
+    <h2>Categorie invoegen</h2>
+<p></p>
+<div id="form">
+        <legend>Kies een nieuw categorie</legend>
+        <div class="blok">
+          <p><input class="veld" type="text" placeholder=" Categorienaam" #category></p>
+        </div>
+        <p><button class="button" mat-stroked-button color="primary"  (click)="addCategory(category.value)">Aanmaken</button><br>
+        <br>
+        <span class="error" *ngIf="errorMessage"> {{errorMessage}} </span>
+        <span class="succes" *ngIf="newCategory"> <b>{{newCategory}}</b> is succesvol ingevoegd!</span>
+</div>
+    
+  </div>
+</main>

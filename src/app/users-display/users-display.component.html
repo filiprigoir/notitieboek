@@ -1,0 +1,117 @@
+
+<div id="map">
+    <div class="left"> <img src="assets/img/map.gif" alt="Map" title="Map" class="space-icons"> </div>  
+    <div class="padding2">      
+      <a [title]="homeLink.title" [routerLink]="[homeLink.url]"> 
+        {{ homeLink.title }} </a> » Ledenlijst beheren 
+    </div>
+</div>
+  
+<main class="text-body">
+    <div id="main-right">
+        <div id="box-right-tablet">
+            <div><app-statistieken></app-statistieken></div>
+
+            <div id="zoeken">
+                <div class="display-titel"><b>Leden sorteren</b></div>
+                    <div class="display-info">
+  
+                            <label>Weergave sorteren op:</label><br>
+                            <p><select class="select" name="cat" #orderBy >
+                              <option *ngFor="let order of orderby" [selected]="order.selected" (click)="getOrderBy(order.name,order.sort)">{{order.text}}</option>  
+                   
+                            </select></p>
+
+                    </div>       
+                </div>
+
+                <div id="zoeken">
+                    <div class="display-titel"><b>Zoekwoord ingeven</b></div>
+                        <div class="display-info">
+      
+                            <label>Typ karakter(s) en klik op enter:</label><br>
+                            <p><input class="veld" type="text" placeholder=" Zoekwoord" #zoekwoord (change)="getfilterOnName(zoekwoord.value)"></p>
+
+                        </div>       
+                    </div>
+
+         </div> 
+    </div>
+    <div id="main-left">
+
+
+
+        <div id="table">
+            <mat-paginator [length] = "this.paginator.totaleLengte"
+                        [pageSize] = "paginator.pageSize"
+                        [pageSizeOptions]="[5, 10, 25, 100]"
+                        (page)="getResults($event)">
+            </mat-paginator>
+
+            <div class="display-title">
+
+            <div class="lijst-id"><b>Id</b></div>
+            <div class="lijst-name"><b>Naam</b></div>
+            <div class="lijst-datum"><b>Datum</b></div>
+            <div class="lijst-actie"><b>Actie &nbsp;</b></div>
+
+            </div>
+ 
+            <mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="wait"></mat-progress-spinner>
+
+            <div *ngIf="geenResultaten === null; else geenResultaat">
+
+                <div *ngFor="let user of users; let i = index">
+
+                    <div *ngIf="i % 2 === 1; else anderKleur">
+
+                        <div class="display-dark-color">
+
+                            <div class="lijst-id">{{user.userId}}</div>
+                            <div class="lijst-name">{{user.name}}</div>
+                            <div *ngIf="user.userId" class="lijst-datum">{{user.datum.substr(0,10)}}</div>
+                            <div *ngIf="user.userId" class="lijst-actie">
+
+                            <a  [title]="userLink.title"
+                                [routerLink]="[userLink.url, user.userId]">
+                                <mat-icon aria-hidden="false" aria-label="home icon" alt="weg" title="Geef notitieboek weer van {{user.name}}" color="primary" class="pointer">find_in_page</mat-icon>  
+                            </a> 
+
+                                <mat-icon aria-hidden="false" aria-label="delete icon" color="warn" class="pointer" title="{{user.name}} uitschrijven" (click)="RemoveUser(user)">delete</mat-icon>
+                            </div>
+
+                        </div>
+
+                    </div>
+ 
+                    <ng-template #anderKleur>
+
+                        <div class="display-light-color">
+
+                            <div class="lijst-id">{{user.userId}}</div>
+                            <div class="lijst-name">{{user.name}}</div>
+                            <div *ngIf="user.userId" class="lijst-datum">{{user.datum.substr(0,10)}}</div>
+                            <div *ngIf="user.userId" class="lijst-actie">
+                                
+                            <a  [title]="userLink.title"
+                                [routerLink]="[userLink.url, user.userId]">
+                                <mat-icon aria-hidden="false" aria-label="home icon" alt="weg" title="Geef notitieboek weer van {{user.name}}" color="primary" class="pointer">find_in_page</mat-icon>  
+                            </a>  
+                            <mat-icon aria-hidden="false" aria-label="delete icon" color="warn" title="{{user.name}} uitschrijven" class="pointer" (click)="RemoveUser(user)">delete</mat-icon>                        
+                            </div>                               
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+            <ng-template #geenResultaat>
+                <div>{{geenResultaten}}</div>
+            </ng-template>
+        </div>
+    </div>    
+</main>
+
+
+
+
+
+

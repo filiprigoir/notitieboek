@@ -1,0 +1,17 @@
+#footer-left {
+    float:left;
+  }
+#footer-right {
+  float:right;
+}
+footer {
+  position:relative;
+  height:50px;
+  padding:18px; 
+  padding-bottom:0; 
+  background-color:rgb(184,224,185);
+}
+.text-footer {
+  font-size:0.80em;
+  color:rgb(47,106,50);
+}

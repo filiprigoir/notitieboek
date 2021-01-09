@@ -1,0 +1,18 @@
+.add-zien {
+    width:200px;
+    height:28px;
+    padding-top: 4px;
+} 
+.remove-zien {
+    width:25px;
+    height:28px;
+    padding-right: 35px;
+}
+.pointer {
+    cursor: pointer;
+}
+#notitie-icon {
+    margin-top: -5px;
+    height:35px;
+    width:35px;
+}

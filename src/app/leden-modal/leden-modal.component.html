@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h4 class="modal-title">Lidmaatschap schrappen</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">   
+  <div id="form"> 
+    <div class="blok">
+        <p>Naam: <b>{{updateUser.name}}</b></p>
+        <p>ID: {{updateUser.userId}}</p>
+        <p>Ingschreven op: {{updateUser.datum | date:'shortDate' }}</p>
+        <p>Aantal notities dat verwijderd zal worden: {{aantalNotities}}</p>
+        <p><button *ngIf="updateUser.name != null" class="button" mat-stroked-button color="primary" (click)="userVerwijderen()">Uitschrijven</button></p>
+          <br>
+    </div>
+  </div> 
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Venster sluiten</button>
+  </div>  

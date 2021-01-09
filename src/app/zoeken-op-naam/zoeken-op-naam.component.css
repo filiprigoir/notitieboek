@@ -1,0 +1,20 @@
+.blok {
+  width: 220px;
+  min-height: 100px;
+  float:left;
+}
+:host ::ng-deep .spinner circle {   
+  stroke: #0CC20C;
+}
+
+::ng-deep .mat-paginator {
+  font-size: 14px;
+}
+
+::ng-deep .mat-select-value {
+  font-size: 14px;
+}
+
+::ng-deep .mat-option-value {
+  font-size: 14px;
+} 

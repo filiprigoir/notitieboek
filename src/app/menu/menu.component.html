@@ -1,0 +1,12 @@
+<nav>
+  <ul id="hoofdmenu">
+    <div *ngFor="let menu of menuLijst">
+      <li>  
+        <a [title]="menu.tekst"
+          [routerLink]="[menu.url]">
+          {{ menu.tekst }}
+        </a> 
+      </li>
+    </div>
+  </ul>
+</nav>

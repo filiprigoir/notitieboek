@@ -1,0 +1,142 @@
+<div id="map">
+    <div class="left"> <img src="assets/img/map.gif" alt="Map" title="Map" class="space-icons"> </div>  
+    <div class="padding2"> <a [title]="homeLink.title" [routerLink]="[homeLink.url]"> 
+      {{ homeLink.title }} </a> » Notitieboek weergave 
+    
+    </div>  
+  </div>
+  
+  <main class="text-body">
+    <div id="main-right">
+        <div id="box-right-tablet">
+            <app-statistieken></app-statistieken>
+
+            <div id="zoeken">
+              <div class="display-titel"><b>Categorieën filteren</b></div>
+                  <div class="display-info">
+
+                    <div *ngFor="let category of categories; let i = index">
+                      <span *ngIf="category.checked; else nietGeslecteerd">
+                        <input type="checkbox" id="cat{{category.catId}}" name="cat{{category.catId}}" value="{{category.catId}}" [checked]="true" (change)="filterCategory(i, category.checked)">
+                      </span>
+                  
+                      <ng-template #nietGeslecteerd>
+                        <input type="checkbox" id="cat{{category.catId}}" name="cat{{category.catId}}" value="{{category.catId}}" [checked]="false" (change)="filterCategory(i, category.checked)">
+                      </ng-template>
+          
+                      <label for="cat{{category.catId}}">&nbsp;{{category.name}}</label>
+                    </div>
+                  </div>       
+              </div>
+
+          <div id="zoeken">
+            <div class="display-titel"><b>Uitgebreid filteren op woorden</b></div>
+                <div class="display-info">
+
+                  <label>Typ karakter(s) en klik op enter:</label>
+       
+                      <select class="select" name="cat" #choice>
+                           <option value="title" selected>Titel</option>
+                           <option value="name" >Naam</option>  
+                           <option value="freeText" >Notitie</option>   
+                   </select>
+                    
+                    <p><input class="veld" type="text" placeholder=" Zoekwoord" #zoekwoord (change)="searchNotities(choice.value,zoekwoord.value)"></p>
+        
+              </div>       
+        </div>
+
+        <app-laatste5-users></app-laatste5-users>
+        
+         </div>  
+    </div>
+
+    <div id="main-left">
+
+      <div *ngIf="geenResultaten === null">
+        <mat-paginator [length] = "paginator.totaleLengte"
+            [pageSize] = "paginator.pageSize"
+            [pageSizeOptions]="[6, 12, 36, 96]"
+            (page)="getResults($event)">
+        </mat-paginator>
+        </div>
+
+      <mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="wait"></mat-progress-spinner>
+
+        <div *ngIf="geenResultaten === null; else geenResultaat">
+
+          <div class="blok">
+             
+            <div class="notablok" *ngFor="let notitie of weergavePerRij1">   
+              <div class="noteTitle">
+                <b>{{notitie.title}}</b>
+              </div>
+              <div class="notaText">{{notitie.note}}</div>
+              
+              <div class="naam">{{notitie.name}}</div>
+              <div class="favorieten" >
+
+                <div class="left">
+                  {{notitie.category}}
+                </div>
+                <div class="right nota-pos">
+                  {{notitie.datum.substr(0,10)}}         
+                </div>
+
+              </div>
+            </div>
+          
+          </div>
+
+          <div class="blok">
+             
+            <div class="notablok" *ngFor="let notitie of weergavePerRij2">   
+              <div class="noteTitle">
+                <b>{{notitie.title}}</b>
+              </div>
+              <div class="notaText">{{notitie.note}}</div>
+              
+              <div class="naam">{{notitie.name}}</div>
+              <div class="favorieten" >
+
+                <div class="left">
+                  {{notitie.category}}
+                </div>
+                <div class="right nota-pos">
+                  {{notitie.datum.substr(0,10)}}               
+                </div>
+
+              </div>
+            </div>
+          
+          </div>
+
+          <div class="blok">
+             
+            <div class="notablok" *ngFor="let notitie of weergavePerRij3">   
+              <div class="noteTitle">
+                <b>{{notitie.title}}</b>
+              </div>
+              <div class="notaText">{{notitie.note}}</div>
+              
+              <div class="naam">{{notitie.name}}</div>
+              <div class="favorieten" >
+
+                <div class="left">
+                  {{notitie.category}}
+                </div>
+                <div class="right nota-pos">
+                  {{notitie.datum.substr(0,10)}}               
+                </div>
+
+              </div>
+            </div>
+          
+          </div>
+
+        </div>
+    
+          <ng-template #geenResultaat>
+            <div>{{geenResultaten}}</div>
+          </ng-template>
+    </div>

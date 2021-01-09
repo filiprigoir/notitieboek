@@ -1,0 +1,45 @@
+
+<div id="map">
+  <div class="left"> <img src="assets/img/map.gif" alt="Map" title="Map" class="space-icons"> </div>  
+  <div class="padding2">      
+    <a [title]="homeLink.title" [routerLink]="[homeLink.url]"> 
+      {{ homeLink.title }} </a> » Notitie aanmaken 
+  </div>
+</div>
+
+<main class="text-body">
+  <div id="main-right">
+      <div id="box-right-tablet">
+          <app-statistieken></app-statistieken>
+          <app-laatste5-users></app-laatste5-users>
+       </div> 
+  </div>
+  <div id="main-left">
+
+    <h2>Registratie Notitieboek</h2>
+<p></p>
+<div id="form">
+        <legend>Vul uw gegevens in</legend>
+        <div class="blok">
+
+            <p class="space-down"><label class="vraag" for="voornaam">Voornaam: *</label><br>
+            <input class="veld" type="text" placeholder=" Voornaam" #voornaam></p>
+
+            <p><label class="vraag" for="achternaam">Achternaam: *</label><br>
+            <input class="veld" type="text" placeholder=" Achternaam" #achternaam></p>
+
+        </div>
+        <p><button class="button" mat-stroked-button color="primary"  (click)="addGebruiker(voornaam.value, achternaam.value)">Registreer</button><br>
+        <br>
+        <span class="error" *ngIf="errorMessage"> {{errorMessage}} </span>
+        <span class="succes" *ngIf="newUser"> <b>{{newUser}}</b> is succesvol ingevoegd!</span>
+</div>
+    
+  </div>
+</main>
+
+
+
+
+
+

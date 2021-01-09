@@ -1,0 +1,48 @@
+
+<div id="map">
+    <div class="left"> <img src="assets/img/map.gif" alt="Map" title="Map" class="space-icons"> </div>  
+    <div class="padding2">      
+      <a [title]="homeLink.tekst" [routerLink]="[homeLink.url]"> 
+        {{ homeLink.tekst }} </a> » FAQ 
+    </div>
+  </div>
+
+  <main class="text-body">
+    <div id="main-right">
+        <div id="box-right-tablet">
+            <app-statistieken></app-statistieken>
+            <app-laatste5-users></app-laatste5-users>
+         </div> 
+    </div>
+    <div id="main-left">
+        <div *ngFor="let faq of faqLijst; let i = index">
+            <p><span class="title-helpdesk">{{faq.Id}}) {{faq.vraag}}</span></p>
+            <span>
+                {{faq.antwoord}} 
+            </span>
+            <hr *ngIf="i < faqLijst.length-1" class="line">
+        </div>
+    </div>
+  </main>
+    		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

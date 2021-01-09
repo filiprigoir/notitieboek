@@ -1,0 +1,56 @@
+<div class="modal-header">
+    <h4 class="modal-title">Notitie {{updateNotitie.actie}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    
+  <div id="form"> 
+      <div class="blok" *ngIf="updateNotitie.actie === 'aanpassen'; else verwijderen">
+          <p>Naam: <b>{{updateNotitie.name}}</b></p>
+  
+          <p><label class="vraag" for="Titel">Titel: *</label><br>
+          <input class="veld" type="text" value="{{updateNotitie.title}}" placeholder=" Titel van de notitie" #titel></p>
+  
+          <p><label class="vraag" for="Text">Notitietekst: *</label><br>
+            <textarea class="notitieveld" type="text" value="{{updateNotitie.note}}" placeholder=" Notitietekst" #notitietekst></textarea></p>
+  
+          <p><label class="vraag" for="cat">Categorie: *</label><br>
+            <select class="select" name="cat" #category>
+              <option *ngFor="let category of categories" [selected]="updateNotitie.catId == category.catId" value="{{category.name}}_{{category.catId}}">{{category.name}}</option>  
+  
+            </select></p>
+  
+            <p><button class="button" mat-stroked-button color="primary" (click)="notitieUpdaten(titel.value, notitietekst.value, category.value)">Updaten</button></p>
+              
+          
+              <span class="error" *ngIf="errorMessage"> {{errorMessage}} </span>
+              <span class="succes" *ngIf="newTitle"> Notitie met title <b>{{newTitle}}</b> is succesvol geüpdatet! ({{updated}})</span><p>
+  
+      </div>
+  
+      <ng-template #verwijderen>
+        <div class="blok">
+  
+          <p>Naam: <b>{{updateNotitie.name}}</b></p>
+  
+          <p>{{updateNotitie.title}}</p>
+  
+          <p>{{updateNotitie.note}}</p>
+
+          <p>{{updateNotitie.datum | date:'shortDate' }}</p>
+  
+          <p class="favorieten">{{updateNotitie.category}}</p>
+  
+          <p><button *ngIf="updateNotitie.title != null" class="button" mat-stroked-button color="primary" (click)="notitieVerwijderen()">Verwijderen</button><br>
+            <br>
+  
+      </div>
+      </ng-template>
+  </div>
+  
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Venster sluiten</button>
+  </div>  

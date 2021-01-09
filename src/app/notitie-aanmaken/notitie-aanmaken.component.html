@@ -1,0 +1,47 @@
+
+<div id="map">
+    <div class="left"> <img src="assets/img/map.gif" alt="Map" title="Map" class="space-icons"> </div>  
+    <div class="padding2">      
+      <a [title]="homeLink.title" [routerLink]="[homeLink.url]"> 
+        {{ homeLink.title }} </a> » Notitie aanmaken 
+    </div>
+  </div>
+
+  <main class="text-body">
+    <div id="main-right">
+        <div id="box-right-tablet">
+            <app-statistieken></app-statistieken>
+            <app-laatste5-users></app-laatste5-users>
+         </div> 
+    </div>
+    <div id="main-left">
+  
+      <h2>Notitie aanmaken</h2>
+  <p></p>
+  <div id="form">
+          <div class="blok">
+              <label class="vraag">Naam: *</label><br>
+              <input class="veld" type="text" placeholder=" Volledige naam" #naam><p>
+  
+              <p><label class="vraag" for="Titel">Titel: *</label><br>
+              <input class="veld" type="text" placeholder=" Titel van de notitie" #titel></p>
+
+              <p><label class="vraag" for="Text">Notitietekst: *</label><br>
+                <textarea class="notitieveld" type="text" placeholder=" Notitietekst" #notitietekst></textarea></p>
+
+              <p><label class="vraag" for="cat">Categorie: *</label><br>
+                <select class="select" name="cat" #category>
+                     <option value="" [selected]="true">Selecteer</option>
+                     <option *ngFor="let category of categories" value="{{category.catId}}">{{category.name}}</option>         
+             </select></p>
+  
+          </div>
+          <p><button class="button" mat-stroked-button color="primary" (click)="addnotitie(naam.value, titel.value, notitietekst.value,category.value)">Aanmaken</button><br>
+          <br>
+          <span class="error" *ngIf="errorMessage"> {{errorMessage}} </span>
+          <span class="succes" *ngIf="newTitle"> Notitie met title <b>{{newTitle}}</b> is succesvol ingevoegd!</span>
+  </div>
+      
+    </div>
+  </main>
+  

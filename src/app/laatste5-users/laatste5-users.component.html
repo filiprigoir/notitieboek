@@ -1,0 +1,24 @@
+<div id="opvolgen">
+    <div class="display-titel"><b>5 nieuwste leden</b></div>
+    <div class="display-info clearfix">
+      <div *ngIf="geenResultaten === null; else geenResultaat">
+        <div *ngFor="let user of laatste5Users">
+          <div class="add-zien left">
+            {{user.name}}
+          </div> 
+          <div class="remove-zien right">
+ 
+            <a  [title]="userLink.title"
+            [routerLink]="[userLink.url, user.userId]">
+            <img id="notitie-icon" class="pointer" alt="weg" title="Geef notitieboek weer van {{user.name}}" src="assets/img/notitieboek-icon.gif">
+          </a> 
+
+          </div>
+       </div>
+      </div>
+      <ng-template #geenResultaat>
+        <div>{{geenResultaten}}</div>
+      </ng-template>
+
+    </div>
+</div>

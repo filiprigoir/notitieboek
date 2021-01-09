@@ -1,0 +1,27 @@
+<header>
+    <div id="header-left">
+        <table>
+            <tr>
+                <td>
+                    <a [title]="home.title"
+                    [routerLink]="[home.url]">
+                    <img src="assets/img/logo.png" alt="Notitieboek" title="Notitieboek" class="logo">
+                    </a> 
+                </td>
+                <td>     
+                    <a [title]="home.title"
+                    [routerLink]="[home.url]">
+                    <span class="header-title">{{home.tekst}}</span>
+                    </a> 
+                </td>
+            </tr>
+        </table>
+    </div>	 
+    <div id="header-right" class="cat-text-position">
+        <a [title]="url.tekst"
+            [routerLink]="[url.url]">
+            {{ url.tekst }}
+        </a> 
+    </div>	
+</header>
+

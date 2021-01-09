@@ -1,0 +1,61 @@
+.veld { 
+  height:30px;
+  min-width: 220px;
+  padding:0px;
+  margin:5px 0 0 0px;
+}
+.containerSearch {
+  width: 220px;
+  height: 100px;
+  float:left;
+}
+.button {
+  height:35px;
+  color: rgb(32, 112, 79);
+  background-color:rgb(141, 202, 159);
+}
+.error {
+color: red;
+}
+.pointer {
+  cursor: pointer;
+}   
+.img-update {
+  height: 18px;
+  width: 18px;
+}
+.img-verwijder {
+height: 22px;
+width: 24px;
+}
+.space {
+    height: 25px;
+}
+.blok {
+  width: 220px;
+  min-height: 100px;
+  float:left;
+}
+#search-left {
+  float:left;
+  width:400px;
+  height: 220px;
+  border:1px solid rgb(133,173,173);
+  background-color: rgb(223, 219, 219);
+}
+#search-right {
+  float:right;
+  width:250px;
+  height:220px;
+  border:1px solid rgb(133,173,173);
+  background-color: rgb(192, 235, 210);
+}
+.select {
+  height:30px;
+  min-width:220px;
+  padding:5px;
+  margin:5px 0 0 0px;
+}
+:host ::ng-deep .spinner circle{   
+  stroke: #0CC20C;
+}

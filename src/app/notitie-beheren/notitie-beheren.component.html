@@ -1,0 +1,127 @@
+
+<div id="map">
+    <div class="left"> <img src="assets/img/map.gif" alt="Map" title="Map" class="space-icons"> </div>  
+    <div class="padding2">      
+      <a [title]="homeLink.title" [routerLink]="[homeLink.url]"> 
+        {{ homeLink.title }} </a> » 
+
+        <span *ngIf="naamWeergave === null; else geenNaam"> 
+          Notitie beheren 
+     </span>
+
+     <ng-template #geenNaam>
+       <span>Notitie beheer van {{naamWeergave}}</span>
+     </ng-template>
+        
+    </div>
+  </div>
+   
+  <main class="text-body">
+    <div id="main-right">
+        <div id="box-right-tablet">
+            <app-statistieken></app-statistieken>
+            <app-laatste5-users></app-laatste5-users>
+         </div> 
+    </div>
+    <div id="main-left">
+
+        <div>
+            <label>Geef de naam die je wilt beheren en klik op enter:</label><br>
+            <input class="veld" type="text" placeholder=" Volledige naam" #zoekwoord (change)="setName(zoekwoord.value)"> 
+        </div><p>
+
+          <div *ngIf="userId != null">
+            <mat-paginator [length] = "paginator.totaleLengte"
+                [pageSize] = "paginator.pageSize"
+                [pageSizeOptions]="[6, 12, 36, 96]"
+                (page)="getResults($event)">
+            </mat-paginator>
+          </div>
+
+        <p><mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="wait"></mat-progress-spinner></p>
+
+        <div *ngIf="geenResultaten === null; else geenResultaat">
+
+            <div class="blok">
+               
+              <div class="notablok" *ngFor="let notitie of weergavePerRij1; let i = index"> 
+
+                <div class="noteTitle">
+                  <b>{{notitie.title}}</b>
+                </div>
+                <div class="notaText">{{notitie.note}}</div>
+
+                <div class="favorieten" >
+  
+                  <div class="left">
+                    {{notitie.category}}
+                  </div>
+                  <div *ngIf="notitie.title" class="right nota-pos">
+                    <img src="assets/img/update.png" alt="Updaten" title="Updaten" class="pointer img-update" (click)="detailNotitie(notitie,'aanpassen')">   
+                    &nbsp; 
+                    <img src="assets/img/verwijder.gif" alt="Verwijder" title="Verwijder" class="pointer img-verwijder" (click)="detailNotitie(notitie,'verwijderen')"> 
+                  </div>
+  
+                </div>    
+              </div>
+  
+
+            </div>
+  
+            <div class="blok">
+               
+              <div class="notablok" *ngFor="let notitie of weergavePerRij2; let i = index">   
+                <div class="noteTitle">
+                  <b>{{notitie.title}}</b>
+                </div>
+                <div class="notaText">{{notitie.note}}</div>
+
+                <div class="favorieten" >
+  
+                  <div class="left">
+                    {{notitie.category}}
+                  </div>
+                  <div *ngIf="notitie.title" class="right nota-pos">
+                    <img src="assets/img/update.png" alt="Updaten" title="Updaten" class="pointer img-update" (click)="detailNotitie(notitie,'aanpassen')">   
+                    &nbsp; 
+                    <img src="assets/img/verwijder.gif" alt="Verwijder" title="Verwijder" class="pointer img-verwijder" (click)="detailNotitie(notitie,'verwijderen')"> 
+                  </div>
+  
+                </div>
+              </div>
+            
+            </div>
+  
+            <div class="blok">
+               
+              <div class="notablok" *ngFor="let notitie of weergavePerRij3; let i = index">   
+                <div class="noteTitle">
+                  <b>{{notitie.title}}</b>
+                </div>
+                <div class="notaText">{{notitie.note}}</div>
+
+                <div class="favorieten" >
+  
+                  <div class="left">
+                    {{notitie.category}}
+                  </div>
+                  <div *ngIf="notitie.title" class="right nota-pos">
+                    <img src="assets/img/update.png" alt="Updaten" title="Updaten" class="pointer img-update" (click)="detailNotitie(notitie,'aanpassen')">   
+                    &nbsp; 
+                    <img src="assets/img/verwijder.gif" alt="Verwijder" title="Verwijder" class="pointer img-verwijder" (click)="detailNotitie(notitie,'verwijderen')"> 
+                  </div>
+  
+                </div>
+              </div>
+            
+            </div>
+  
+          </div>
+      
+            <ng-template #geenResultaat>
+              <div class="error">{{geenResultaten}}</div>
+            </ng-template>
+        
+    </div>
+  </main>
+

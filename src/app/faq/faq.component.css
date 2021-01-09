@@ -1,0 +1,14 @@
+.helpMain {
+    border:2px solid rgb(64,191,64); 
+    border-top:0;
+    padding:30px;
+    margin-bottom:20px;
+}
+.title-helpdesk {
+    font-size:1.15em;
+    font-weight:bold;
+}
+hr.line {
+    border:2px solid rgb(140,217,140);
+    border-radius:5px;
+}

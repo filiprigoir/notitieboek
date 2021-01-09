@@ -1,0 +1,112 @@
+
+<div id="map">
+    <div class="left"> <img src="assets/img/map.gif" alt="Map" title="Map" class="space-icons"> </div>  
+    <div class="padding2"> <a [title]="homeLink.title" [routerLink]="[homeLink.url]"> 
+      {{ homeLink.title }} </a> » 
+    
+      <span *ngIf="naamWeergave === null; else geenNaam"> 
+           Notitieboek weergave op naam
+      </span>
+
+      <ng-template #geenNaam>
+        <span>Notitieboek weergave van {{naamWeergave}}</span>
+      </ng-template>
+
+    </div>  
+  </div>
+  
+  <main class="text-body">
+    <div id="main-right">
+        <div id="box-right-tablet">
+            <app-statistieken></app-statistieken>
+            <app-laatste5-users></app-laatste5-users>
+         </div>  
+    </div>
+    <div id="main-left">
+
+      <div *ngIf="geenResultaten === null">
+      <mat-paginator [length] = "paginator.totaleLengte"
+          [pageSize] = "paginator.pageSize"
+          [pageSizeOptions]="[6, 12, 36, 96]"
+          (page)="getResults($event)">
+      </mat-paginator>
+      </div>
+
+      <mat-progress-spinner mode="indeterminate" class="spinner" *ngIf="wait"></mat-progress-spinner>
+      
+        <div *ngIf="geenResultaten === null; else geenResultaat">
+
+          <div class="blok">
+             
+            <div class="notablok" *ngFor="let notitie of weergavePerRij1">   
+              <div class="noteTitle">
+                <b>{{notitie.title}}</b>
+              </div>
+              <div class="notaText">{{notitie.note}}</div>
+
+              <div class="favorieten" >
+
+                <div class="left">
+                  {{notitie.category}}
+                </div>
+                <div class="right nota-pos">
+                  {{notitie.datum.substr(0,10)}}               
+                </div>
+
+              </div>
+            </div>
+          
+          </div>
+
+          <div class="blok">
+             
+            <div class="notablok" *ngFor="let notitie of weergavePerRij2">   
+              <div class="noteTitle">
+                <b>{{notitie.title}}</b>
+              </div>
+              <div class="notaText">{{notitie.note}}</div>
+              
+  
+              <div class="favorieten" >
+
+                <div class="left">
+                  {{notitie.category}}
+                </div>
+                <div class="right nota-pos">
+                  {{notitie.datum.substr(0,10)}}               
+                </div>
+
+              </div>
+            </div>
+          
+          </div>
+
+          <div class="blok">
+             
+            <div class="notablok" *ngFor="let notitie of weergavePerRij3">   
+              <div class="noteTitle">
+                <b>{{notitie.title}}</b>
+              </div>
+              <div class="notaText">{{notitie.note}}</div>
+              
+
+              <div class="favorieten" >
+
+                <div class="left">
+                  {{notitie.category}}
+                </div>
+                <div class="right nota-pos">
+                  {{notitie.datum.substr(0,10)}}               
+                </div>
+
+              </div>
+            </div>
+          
+          </div>
+
+        </div>
+    
+          <ng-template #geenResultaat>
+            <div>{{geenResultaten}}</div>
+          </ng-template>
+    </div>
