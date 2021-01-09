@@ -13,7 +13,7 @@ export class StatistiekenComponent implements OnInit {
   alleLeden:  {title: string, aantal: number};
   nieuweNotities: {title: string, aantal: number};
   nieuweLeden: {title: string, aantal: number}; 
- 
+   
   constructor(private notitielijstService: NotitielijstService) {
       this.alleNotities = {title: "totaal aantal notities", aantal: null};
       this.alleLeden = {title: "Totaal aantal Leden", aantal: null};

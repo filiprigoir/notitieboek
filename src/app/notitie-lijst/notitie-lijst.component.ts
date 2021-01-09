@@ -11,7 +11,7 @@ import { Paginator } from '../paginator';
   styleUrls: ['./notitie-lijst.component.css']
 })
 export class NotitieLijstComponent implements OnInit {
- 
+
   geenResultaten: string; 
   homeLink: { title: string; url: string; };
   zoekOpName: string;
@@ -77,6 +77,7 @@ export class NotitieLijstComponent implements OnInit {
         }
         else {
           this.geenResultaten = "Er staan geen notities in deze notitieboek";
+          this.wait = false;
         }
     });
   }

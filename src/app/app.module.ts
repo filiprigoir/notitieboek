@@ -21,7 +21,7 @@ import { CategorieAanmakenComponent } from './categorie-aanmaken/categorie-aanma
 import { LedenModalComponent } from './leden-modal/leden-modal.component';
 import { FooterComponent } from './footer/footer.component';
 import { FaqComponent } from './faq/faq.component';
- 
+
 @NgModule({
   declarations: [ 
     AppComponent, 
