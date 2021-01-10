@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'
-import { MaterialModule } from './material/material.module'
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { RouterModule } from '@angular/router';
@@ -21,7 +20,9 @@ import { CategorieAanmakenComponent } from './categorie-aanmaken/categorie-aanma
 import { LedenModalComponent } from './leden-modal/leden-modal.component';
 import { FooterComponent } from './footer/footer.component';
 import { FaqComponent } from './faq/faq.component';
-
+import { CookieService } from 'ngx-cookie-service';
+import { MaterialModule } from './material/material.module';
+ 
 @NgModule({
   declarations: [ 
     AppComponent, 
@@ -53,17 +54,17 @@ import { FaqComponent } from './faq/faq.component';
       { path: 'leden', component: UsersDisplayComponent },
       { path: 'zoekenopnaam/:userId', component: ZoekenOpNaamComponent},
       { path: 'faq', component: FaqComponent}
-    ]), 
+    ]),
     BrowserAnimationsModule, 
     MaterialModule, 
-    NgbModule,
+    NgbModule, 
   ],
   exports: [
     UsersDisplayComponent,
     MaterialModule,
     UsersDisplayComponent
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

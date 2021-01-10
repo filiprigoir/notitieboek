@@ -54,31 +54,10 @@ export class NotitieAanmakenComponent implements OnInit{
     } 
     else { 
 
-      let snip = 24;
-      let splitNotitieText = notitietekst.split(' ');
-      splitNotitieText.forEach(check => {
-          let count = check.length;
-          if(count >= snip) {
+      let checkedTitle = this.splitLongWords(titel, 22);
+      let checkedNote = this.splitLongWords(notitietekst, 24);
 
-             let run = Math.floor(count / snip);
-             let rest = count % snip;
-
-             let x = 0;
-             for (let index = 0; index < run; index++) {
-              knipLangeText += check.substr(x, snip) + " "; 
-                x += snip;
-             }   
-
-             if(rest > 0)
-               knipLangeText += check.substr(x, rest) + " "; 
-          }
-          else {
-            knipLangeText += check + " ";
-          }
-      });
-
-      let checkedNode = knipLangeText.trim();
-      this.notitielijstService.setNotitie(naam, +category, titel, checkedNode).subscribe((data: any) => {
+      this.notitielijstService.setNotitie(naam, +category, checkedTitle, checkedNote).subscribe((data: any) => {
           if(data.hasOwnProperty("error")) {
               if(data.error == "User not exists") {
                 this.errorMessage = "Deze naam is nog niet geregistreerd!";
@@ -88,10 +67,39 @@ export class NotitieAanmakenComponent implements OnInit{
               }
           }
           else {
-              this.newTitle = titel;
+              this.newTitle = checkedTitle;
               this.statistiekenComponent.addNotitie(1);
           }
       });
     }
-  };  
+  }  
+
+  private splitLongWords = (check: string, snip: number) : string => {
+
+    let knipLangeText = "";
+
+    let splitNotitieText = check.split(' ');
+    splitNotitieText.forEach(check => {
+        let count = check.length;
+        if(count >= snip) {
+
+           let run = Math.floor(count / snip);
+           let rest = count % snip;
+
+           let x = 0;
+           for (let index = 0; index < run; index++) {
+            knipLangeText += check.substr(x, snip) + " "; 
+              x += snip;
+           }   
+
+           if(rest > 0)
+             knipLangeText += check.substr(x, rest) + " "; 
+        }
+        else {
+          knipLangeText += check + " ";
+        }
+    });
+
+    return knipLangeText.trim();
+  }
 }

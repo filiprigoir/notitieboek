@@ -6,6 +6,7 @@ import { NotitieModalComponent } from '../notitie-modal/notitie-modal.component'
 import { PageEvent } from '@angular/material/paginator';
 import { StatistiekenComponent } from '../statistieken/statistieken.component';
 import { Paginator } from '../paginator';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-notitie-beheren',
@@ -32,7 +33,8 @@ export class NotitieBeherenComponent implements OnInit {
 
   constructor(
     private notitielijstService: NotitielijstService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private cookieService: CookieService
     ) { 
 
     this.naamWeergave = null;
@@ -40,6 +42,13 @@ export class NotitieBeherenComponent implements OnInit {
     this.userId = null;
 
     this.paginator = new Paginator(0, 12);
+
+    if(this.cookieService.check('pageSizeNotities')) {
+      let pageSize = +this.cookieService.get('pageSizeNotities');
+      if(pageSize > 0 ) {
+        this.paginator.pageSize = pageSize;
+      }
+    }
 
     this.homeLink = {
       'title': "Homepage",
@@ -136,6 +145,9 @@ export class NotitieBeherenComponent implements OnInit {
   }
 
   getResults = (event: PageEvent) : void => {
+
+    if(event.pageSize != this.paginator.pageSize)
+      this.cookieService.set('pageSizeNotities', event.pageSize.toString());
 
     if(event.length > 0) {
 

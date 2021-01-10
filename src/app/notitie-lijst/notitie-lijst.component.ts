@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { CookieService } from 'ngx-cookie-service';
 import { CategoryChoice } from '../category-choice';
 import { NotitielijstService } from '../notitielijst.service';
 import { Notities } from '../notities';
@@ -11,23 +12,25 @@ import { Paginator } from '../paginator';
   styleUrls: ['./notitie-lijst.component.css']
 })
 export class NotitieLijstComponent implements OnInit {
-
+ 
   geenResultaten: string; 
   homeLink: { title: string; url: string; };
   zoekOpName: string;
+  zoekIn:{tekst: string, value: string, selected: boolean}[];
   choice: string;
 
   paginator: Paginator;
-
+ 
   weergavePerRij1:  Notities[];
   weergavePerRij2:  Notities[]; 
   weergavePerRij3:  Notities[];
   categories: CategoryChoice[];
-  
+   
   wait: boolean;
 
   constructor(
-    private notitielijstService: NotitielijstService
+    private notitielijstService: NotitielijstService,
+    private cookieService: CookieService
     ) { 
  
       this.homeLink = { 
@@ -35,57 +38,90 @@ export class NotitieLijstComponent implements OnInit {
         'url': "/"
       };  
 
+      this.choice = "title";
+      this.setZoekIn();
+ 
       this.paginator = new Paginator(0, 12);
 
-      this.categories = [];
+      if(this.cookieService.check('pageSizeNotities')) {
+        let pageSize = +this.cookieService.get('pageSizeNotities');
+        if(pageSize > 0 ) {
+          this.paginator.pageSize = pageSize;
+        }
+      }
+
+      this.categories = null;
       this.geenResultaten = "";
       this.clearResults();
       this.wait = true;
       this.zoekOpName = "";
-      this.choice = "";
-  }  
+  } 
+  
+  zoekInSelected = (value: string) : void => {
+    this.cookieService.set('zoekIn', value.toString());
+  }
 
-  ngOnInit(): void { 
+  setZoekIn = () : void => {
+    this.zoekIn = [];
+    this.zoekIn.push({'tekst': "Titel", 'value': "title", 'selected': true });  
+    this.zoekIn.push({'tekst': "Naam", 'value': "name", 'selected': false });  
+    this.zoekIn.push({'tekst': "Notitie", 'value': "freeText", 'selected': false }); 
+    
+    if(this.cookieService.check('zoekIn')) {
+      let choice = this.cookieService.get('zoekIn');
+      if(choice != "") {
+        this.choice = choice;
+
+        let index = this.zoekIn.findIndex(s => s.value === this.choice);
+        if(index != -1) {
+          this.zoekIn[0].selected = false;
+          this.zoekIn[index].selected = true;
+        }
+      }
+    }
+  }
  
+  ngOnInit(): void { 
+  
     this.geenResultaten = null;
 
-    this.notitielijstService.getAllNumberOfNotities().subscribe((aantal: number) => { 
+    this.notitielijstService.getCategories().subscribe((data: any[]) => {
+      if(data.length > 0) {
+        this.categories = data;   
+  
+        if(this.cookieService.check('filterCategory')) {
 
-        if(aantal > 0) {
+            let filterCat = this.cookieService.get('filterCategory');  
+            let filterArr = filterCat.split(',');
 
-          this.paginator.totaleLengte = aantal;
-          this.paginator.defaultLengte = aantal;
-
-          this.notitielijstService.getAllNotities(this.paginator.pointer, this.paginator.pageSize).subscribe((data: Notities[]) => {
-
-            this.splitData(data);
-            this.wait = false;
-      
-            this.notitielijstService.getCategories().subscribe((data: any[]) => {
-              if(data.length > 0) {
-                this.categories = data;      
-              }
-              else {
-                this.categories = null; 
-              }
-      
-              this.categories.forEach(element => {
-                 element.checked = true;
-              }); 
-            }); 
+            this.categories.forEach(element => {
+              let index = +filterArr.findIndex(f => f === element.catId.toString());
+              
+              if(index != -1)
+                element.checked = true;
+              else
+                element.checked = false;
           });
         }
         else {
-          this.geenResultaten = "Er staan geen notities in deze notitieboek";
-          this.wait = false;
+          this.categories.forEach(element => {
+            element.checked = true;
+          });
         }
-    });
+      }
+      else {
+        this.categories = null; 
+      } 
+        this.prepareFiliterCategory(this.paginator.pointer, this.paginator.pageSize);
+        this.wait = false;
+    });     
   }
 
   filterCategory = (category: number, isChecked: boolean) : void => {
 
     this.geenResultaten = null;
     this.categories[category].checked = isChecked ? false : true;
+    this.cookieService.set('filterCategory', this.getCategoryString());
 
     if(this.zoekOpName === "") {
       this.prepareFiliterCategory(this.paginator.pointer, this.paginator.pageSize);
@@ -104,6 +140,7 @@ export class NotitieLijstComponent implements OnInit {
     this.geenResultaten = null;
     this.zoekOpName = zoekwoord;
     this.choice = choice;
+  
     this.prepareFilterZoekwoord(this.paginator.pointer, this.paginator.pageSize);
   } 
 
@@ -251,6 +288,9 @@ export class NotitieLijstComponent implements OnInit {
     this.clearResults();
 
     if(event.length > 0) {
+
+      if(event.pageSize != this.paginator.pageSize)
+        this.cookieService.set('pageSizeNotities', event.pageSize.toString());
 
       this.geenResultaten = null;
       this.paginator = new Paginator(event.pageIndex, event.pageSize);

@@ -1,14 +1,11 @@
-import { HttpClient, JsonpInterceptor } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotitielijstService {
-  getCategory() {
-    throw new Error('Method not implemented.');
-  }
-  
+
   headers: any;
 
   constructor(private http: HttpClient) {
@@ -66,10 +63,6 @@ export class NotitielijstService {
     return this.http.put('https://delicious-mercury-ricotta.glitch.me/notities/' + noteIid, {'title': title, 'note': note, 'catId': catId}, {'headers': this.headers});
   }
 
-  getAllNotities = (pointer: number, aantal: number) => {
-    return this.http.get('https://delicious-mercury-ricotta.glitch.me/notities?pointer=' + pointer + '&aantal=' + aantal, {'headers': this.headers});
-  }
-
   getAllNumberOfNotities = () => {
     return this.http.get('https://delicious-mercury-ricotta.glitch.me/numberAllNotities/', {'headers': this.headers});
   }
@@ -108,10 +101,6 @@ export class NotitielijstService {
 
   getFilterFreeText = (word: string, ids: string, pointer: number, aantal: number) =>  {
     return this.http.get('https://delicious-mercury-ricotta.glitch.me/filterFreeText/?search=' + word + '&catIds=' + ids + '&pointer=' + pointer + '&aantal=' + aantal, {'headers': this.headers});
-  } 
-
-  getUserNameNotities = (name: string) =>  {
-    return this.http.get('https://delicious-mercury-ricotta.glitch.me/username/?username=' + name, {'headers': this.headers});
   } 
 
   getUserNameInfo = (name: string) =>  {

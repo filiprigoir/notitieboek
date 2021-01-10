@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ɵExtraLocaleDataIndex } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { NotitielijstService } from '../notitielijst.service';
 import { Notities } from '../notities';
 import { Paginator } from '../paginator';
@@ -28,7 +29,8 @@ export class ZoekenOpNaamComponent implements OnInit, OnDestroy  {
 
   constructor(
     private route: ActivatedRoute,
-    private notitielijstService: NotitielijstService
+    private notitielijstService: NotitielijstService,
+    private cookieService: CookieService
     ) { 
  
       this.homeLink = { 
@@ -37,6 +39,13 @@ export class ZoekenOpNaamComponent implements OnInit, OnDestroy  {
       }; 
 
       this.paginator = new Paginator(0, 12);
+
+      if(this.cookieService.check('pageSizeNotities')) {
+        let pageSize = +this.cookieService.get('pageSizeNotities');
+        if(pageSize > 0 ) {
+          this.paginator.pageSize = pageSize;
+        }
+      }
 
       this.wait = true;
       this.geenResultaten = "";
@@ -80,6 +89,10 @@ export class ZoekenOpNaamComponent implements OnInit, OnDestroy  {
   getResults = (event: PageEvent) : void => {
 
     if(event.length > 0) {
+
+      if(event.pageSize != this.paginator.pageSize)
+      this.cookieService.set('pageSizeNotities', event.pageSize.toString());
+
       this.paginator = new Paginator(event.pageIndex, event.pageSize);
       this.paginator.totaleLengte = event.length;
       

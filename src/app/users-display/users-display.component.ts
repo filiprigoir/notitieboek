@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CookieService } from 'ngx-cookie-service';
 import { LedenModalComponent } from '../leden-modal/leden-modal.component';
 import { NotitielijstService } from '../notitielijst.service';
 import { Paginator } from '../paginator';
@@ -33,7 +34,8 @@ export class UsersDisplayComponent implements OnInit {
      
   constructor(
     private notitielijstService: NotitielijstService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private cookieService: CookieService
     ) {
     this.users = [];
     this.actie = "";
@@ -48,6 +50,13 @@ export class UsersDisplayComponent implements OnInit {
       'title': "Homepage",  
       'url': "/"
     };
+
+    if(this.cookieService.check('pageSizeLeden')) {
+      let pageSize = +this.cookieService.get('pageSizeLeden');
+      if(pageSize > 0 ) {
+        this.paginator.pageSize = pageSize;
+      }
+    }
 
     this.userLink = {
       'title': "Geef notitieboek",
@@ -66,7 +75,7 @@ export class UsersDisplayComponent implements OnInit {
       this.paginator.defaultLengte = aantal; 
 
       if(aantal > 0) {
-        this.notitielijstService.getUsers(this.sort,0,10).subscribe((data: any[]) => {
+        this.notitielijstService.getUsers(this.sort,this.paginator.pointer,this.paginator.pageSize).subscribe((data: any[]) => {
           this.users = data;
         });
       }
@@ -104,6 +113,19 @@ export class UsersDisplayComponent implements OnInit {
     this.orderby.push({ text: "Oudste eerst", name: "userId", sort: "ASC", selected: false });
     this.orderby.push({ text: "Naam van A-Z", name: "name", sort: "ASC", selected: false });
     this.orderby.push({ text: "Naam van Z-A", name: "name", sort: "DESC", selected: false });
+
+    if(this.cookieService.check('sortLeden')) {
+      let orderby = this.cookieService.get('sortLeden');
+      if(orderby != "" ) {
+        
+        let index = this.orderby.findIndex(o => o.name + " " + o.sort === orderby);
+        if(index != -1) {
+          this.orderby[0].selected = false;
+          this.orderby[index].selected = true;
+          this.sort = orderby;
+        }
+      }
+    }
   }  
 
   getfilterOnName = (name: string) : void => {
@@ -130,7 +152,13 @@ export class UsersDisplayComponent implements OnInit {
   getOrderBy = (name: string, sort: string) : void => { 
 
     this.geenResultaten = null;
-    this.sort = name + " " + sort;    
+    let orderBy = name + " " + sort;
+
+    if(orderBy != this.sort) {
+        this.cookieService.set('sortLeden', orderBy.toString());  
+    }
+
+    this.sort = orderBy;
  
     if(this.zoekOpName === "") {
  
@@ -175,6 +203,9 @@ export class UsersDisplayComponent implements OnInit {
     if(event.length > 0) {
 
       this.geenResultaten = null;
+
+      if(event.pageSize != this.paginator.pageSize)
+        this.cookieService.set('pageSizeLeden', event.pageSize.toString());
 
       let defaultLengte = this.paginator.defaultLengte;
       this.paginator = new Paginator(event.pageIndex, event.pageSize);

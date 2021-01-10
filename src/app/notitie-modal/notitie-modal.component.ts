@@ -24,7 +24,6 @@ export class NotitieModalComponent implements OnInit {
     public activeModal: NgbActiveModal
     ) {
       this.errorMessage = null;
-
    }
 
   ngOnInit(): void {
@@ -39,52 +38,33 @@ export class NotitieModalComponent implements OnInit {
   notitieUpdaten = (title: string, note: string, info: string) : void => {
 
     this.errorMessage = null;
+    this.newTitle = null;
 
     if(this.updateNotitie.title === title 
       && this.updateNotitie.note === note 
       && this.updateNotitie.category + "_" + this.updateNotitie.catId === info) {
       this.errorMessage = "Er werd niets aangepast!";
     }
+    else if(!title || !note || !info) {
+       this.errorMessage = "Alle velden moet ingevuld zijn!";
+    }
     else {
 
         let infoArr = info.split('_');
         let catId = +infoArr[1];
         let category = infoArr[0];
-        let knipLangeText = "";
-
-        let snip = 24;
-        let splitNotitieText = note.split(' ');
-        splitNotitieText.forEach(check => {
-            let count = check.length;
-            if(count >= snip) {
-  
-               let run = Math.floor(count / snip);
-               let rest = count % snip;
-  
-               let x = 0;
-               for (let index = 0; index < run; index++) {
-                knipLangeText += check.substr(x, snip) + " "; 
-                  x += snip;
-               }   
-  
-               if(rest > 0)
-                 knipLangeText += check.substr(x, rest) + " "; 
-            }
-            else {
-              knipLangeText += check + " ";
-            }
-        });
-  
-        let checkedNote = knipLangeText.trim();
-        this.notitielijstService.updateNotitie(this.updateNotitie.noteId, title, checkedNote, catId).subscribe((data: any[]) => {
+        
+        let checkedTitle = this.splitLongWords(title, 22);
+        let checkedNote = this.splitLongWords(note, 24);
+        this.notitielijstService.updateNotitie(this.updateNotitie.noteId, checkedTitle, checkedNote, catId).subscribe((data: any[]) => {
   
         if(data.hasOwnProperty("error")) {
           this.errorMessage = "Oep... Er ging iets fout!";
         } 
         else {
-          this.newTitle = title;
+          this.newTitle = checkedTitle;
           
-          this.updateNotitie.title = title;
+          this.updateNotitie.title = checkedTitle;
           this.updateNotitie.note = checkedNote;
           this.updateNotitie.catId = catId;
           this.updateNotitie.category = category;  
@@ -93,6 +73,35 @@ export class NotitieModalComponent implements OnInit {
         }     
       });
     }
+  }
+
+  private splitLongWords = (check: string, snip: number) : string => {
+
+    let knipLangeText = "";
+
+    let splitNotitieText = check.split(' ');
+    splitNotitieText.forEach(check => {
+        let count = check.length;
+        if(count >= snip) {
+
+           let run = Math.floor(count / snip);
+           let rest = count % snip;
+
+           let x = 0;
+           for (let index = 0; index < run; index++) {
+            knipLangeText += check.substr(x, snip) + " "; 
+              x += snip;
+           }   
+
+           if(rest > 0)
+             knipLangeText += check.substr(x, rest) + " "; 
+        }
+        else {
+          knipLangeText += check + " ";
+        }
+    });
+
+    return knipLangeText.trim();
   }
 
   notitieVerwijderen = () : void => {

@@ -15,24 +15,17 @@
               <div class="display-titel"><b>Categorieën filteren</b></div>
                   <div class="display-info">
 
-                    <div *ngIf="categories.length > 0; else geenCategeries">
+                    <div *ngIf="categories != null; else geenCategeries">
 
                       <div *ngFor="let category of categories; let i = index">
-                        <span *ngIf="category.checked; else nietGeslecteerd">
-                          <input type="checkbox" id="cat{{category.catId}}" name="cat{{category.catId}}" value="{{category.catId}}" [checked]="true" (change)="filterCategory(i, category.checked)">
-                        </span>
-                    
-                        <ng-template #nietGeslecteerd>
-                          <input type="checkbox" id="cat{{category.catId}}" name="cat{{category.catId}}" value="{{category.catId}}" [checked]="false" (change)="filterCategory(i, category.checked)">
-                        </ng-template>
-            
+                        <input type="checkbox" id="cat{{category.catId}}" name="cat{{category.catId}}" value="{{category.catId}}" [checked]="category.checked" (change)="filterCategory(i, category.checked)">           
                         <label for="cat{{category.catId}}">&nbsp;{{category.name}}</label>
                       </div>
               
                   </div>
 
                   <ng-template #geenCategeries>
-                    <div>Er zijn nog geen categories aangemaakt!</div>
+                    <div>Er zijn nog geen categories ingeladen!</div>
                   </ng-template>
 
                 </div>
@@ -45,10 +38,8 @@
                   <label>Typ karakter(s) en klik op enter:</label>
        
                       <select class="select" name="cat" #choice>
-                           <option value="title" selected>Titel</option>
-                           <option value="name" >Naam</option>  
-                           <option value="freeText" >Notitie</option>   
-                   </select>
+                        <option *ngFor="let actie of zoekIn" value="{{actie.value}}" [selected]="actie.selected" (click)="zoekInSelected(actie.value)">{{actie.tekst}}</option>
+                      </select>
                     
                     <p><input class="veld" type="text" placeholder=" Zoekwoord" #zoekwoord (change)="searchNotities(choice.value,zoekwoord.value)"></p>
         
@@ -58,7 +49,7 @@
         <app-laatste5-users></app-laatste5-users>
         
          </div>  
-    </div>
+    </div> 
 
     <div id="main-left">
 

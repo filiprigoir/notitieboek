@@ -83,7 +83,8 @@ export class FaqComponent implements OnInit {
     faq7.vraag = 'Waar worden alle notities weergeven?';
     faq7.antwoord = 'In het hoofdmenu onder "Notitielijst" kan je alles terugvinden die op het moment in de database staan. '
     + 'Om het laden capabel te maken worden niet alle notities op één pagina getoond maar gesplitst op verschillende '
-    + 'pagina’s naargelang hoeveel er zijn gevonden. Je kan vrij kiezen uit een lijst hoeveel je exact op één pagina wilt zien.';
+    + 'pagina’s naargelang hoeveel er zijn gevonden. Je kan vrij kiezen uit een lijst hoeveel je exact op één pagina wilt zien. '
+    + 'Je persoonlijke voorkeur wordt bijgehouden via een cookie.';
     
     this.faqLijst.push(faq7);
    
