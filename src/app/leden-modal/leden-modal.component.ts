@@ -30,6 +30,7 @@ export class LedenModalComponent implements OnInit {
       this.updateUser.userId = null;
       this.updateUser.notities = null; 
       this.updateUser.datum = null;
+      this.aantalNotities = 0;
 
       this.updateGegevens.emit(this.updateUser);
     });

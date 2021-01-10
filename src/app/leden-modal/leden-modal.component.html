@@ -11,7 +11,7 @@
         <p>ID: {{updateUser.userId}}</p>
         <p>Ingschreven op: {{updateUser.datum | date:'shortDate' }}</p>
         <p>Aantal notities dat verwijderd zal worden: {{aantalNotities}}</p>
-        <p><button *ngIf="updateUser.name != null" class="button" mat-stroked-button color="primary" (click)="userVerwijderen()">Uitschrijven</button></p>
+        <p><button *ngIf="updateUser.userId != null" class="button" mat-stroked-button color="primary" (click)="userVerwijderen()">Uitschrijven</button></p>
           <br>
     </div>
   </div> 

@@ -38,6 +38,7 @@ export class RegistrerenComponent implements OnInit {
  
     if(!voornaam || !achternaam) {
       this.errorMessage = "Alle velden zijn verplicht in te vullen!";
+      this.newUser = "";
     }  
     else {
       this.errorMessage = "";

@@ -17,7 +17,7 @@ export class NotitieModalComponent implements OnInit {
   errorMessage: string;
   newTitle: string; 
   categories: Categories[];
-  updated: number
+  updated: number;
 
   constructor(
     private notitielijstService: NotitielijstService,
