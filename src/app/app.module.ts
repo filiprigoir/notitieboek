@@ -62,7 +62,7 @@ import { MaterialModule } from './material/material.module';
   exports: [
     UsersDisplayComponent,
     MaterialModule,
-    UsersDisplayComponent
+    UsersDisplayComponent,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

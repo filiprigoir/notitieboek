@@ -50,7 +50,7 @@ export class NotitieLijstComponent implements OnInit {
         }
       }
 
-      this.categories = null;
+      this.categories = [];
       this.geenResultaten = "";
       this.clearResults();
       this.wait = true;
@@ -110,7 +110,7 @@ export class NotitieLijstComponent implements OnInit {
         }
       }
       else {
-        this.categories = null; 
+        this.categories = []; 
       } 
         this.prepareFiliterCategory(this.paginator.pointer, this.paginator.pageSize);
         this.wait = false;
@@ -175,7 +175,11 @@ export class NotitieLijstComponent implements OnInit {
       });       
     }
     else {
-      this.geenResultaten = "Geen resultaten alles is uitgefilterd";
+      if(this.categories.length < 1)
+        this.geenResultaten = "Er staan geen notities in deze notitieboek";
+      else
+        this.geenResultaten = "Geen resultaten alles is uitgefilterd";
+        
       this.clearResults();
     }
   }

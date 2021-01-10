@@ -15,7 +15,7 @@
               <div class="display-titel"><b>Categorieën filteren</b></div>
                   <div class="display-info">
 
-                    <div *ngIf="categories != null; else geenCategeries">
+                    <div *ngIf="categories.length > 0; else geenCategeries">
 
                       <div *ngFor="let category of categories; let i = index">
                         <input type="checkbox" id="cat{{category.catId}}" name="cat{{category.catId}}" value="{{category.catId}}" [checked]="category.checked" (change)="filterCategory(i, category.checked)">           

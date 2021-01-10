@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ɵExtraLocaleDataIndex } from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -54,29 +54,42 @@ export class ZoekenOpNaamComponent implements OnInit, OnDestroy  {
 
   ngOnInit(): void {
 
+    if (this.route.snapshot.queryParams['zoekopnaam']) {
+      
+    }
+    else {
+      this.geenResultaten = "Er staan nog geen notities in deze notitieboek ";
+      this.userId = null;
+      this.resetResults();
+    }
+
     this.sub = this.route.params.subscribe(params => {
 
-      this.userId = +params['userId'];
+      if(params['userId'] > 0 || params['userId'] != null) {
 
-      this.notitielijstService.getNumberOfNotitities(this.userId).subscribe((aantal: number) => {
+        this.userId = +params['userId'];
+        this.notitielijstService.getNumberOfNotitities(this.userId).subscribe((aantal: number) => {
 
-        this.paginator.totaleLengte = aantal;
+          this.paginator.totaleLengte = aantal;
+  
+          if(aantal > 0) {
+              this.notitielijstService.getNotitiesUsers(this.userId, this.paginator.pointer, this.paginator.pageSize).subscribe((notities: Notities[]) => {
+  
+                this.naamWeergave = notities[0].name;
+                this.geenResultaten = null;
+                this.splitData(notities);
+             });
+          }
+          else {
+            this.geenResultaten = "Er staan nog geen notities in deze notitieboek ";
+            this.userId = null;
+            this.resetResults();
+          }
+        });
+      }
+      
+      this.wait = false;
 
-        if(aantal > 0) {
-            this.notitielijstService.getNotitiesUsers(this.userId, this.paginator.pointer, this.paginator.pageSize).subscribe((notities: Notities[]) => {
-
-              this.naamWeergave = notities[0].name;
-              this.geenResultaten = null;
-              this.splitData(notities);
-           });
-        }
-        else {
-          this.geenResultaten = "Er staan nog geen notities in deze notitieboek ";
-          this.userId = null;
-          this.resetResults();
-        }
-        this.wait = false;
-      });
    }); 
   } 
  
