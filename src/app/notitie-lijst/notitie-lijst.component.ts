@@ -5,7 +5,7 @@ import { CategoryChoice } from '../category-choice';
 import { NotitielijstService } from '../notitielijst.service';
 import { Notities } from '../notities';
 import { Paginator } from '../paginator';
-
+ 
 @Component({
   selector: 'app-notitie-lijst',
   templateUrl: './notitie-lijst.component.html',
@@ -55,6 +55,8 @@ export class NotitieLijstComponent implements OnInit {
       this.clearResults();
       this.wait = true;
       this.zoekOpName = "";
+
+    
   } 
   
   zoekInSelected = (value: string) : void => {

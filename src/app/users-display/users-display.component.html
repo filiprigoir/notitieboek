@@ -17,11 +17,11 @@
                     <div class="display-info">
   
                             <label>Weergave sorteren op:</label><br>
-                            <p><select class="select" name="cat" #orderBy >
-                              <option *ngFor="let order of orderby" [selected]="order.selected" (click)="getOrderBy(order.name,order.sort)">{{order.text}}</option>  
-                   
+                            <p><select class="select" name="cat" #orderBy>
+                              <option *ngFor="let order of orderby" value="{{order.name + ' ' + order.sort}}" [selected]="order.selected" (click)="getOrderBy(order.name + ' ' + order.sort)">{{order.text}}</option>  
                             </select></p>
 
+                            <p><button *ngIf="!this.showButtonSort" class="button" mat-stroked-button color="primary"  (click)="getOrderBy(orderBy.value)">Go</button><p>                          
                     </div>       
                 </div>
 

@@ -22,7 +22,7 @@ import { FooterComponent } from './footer/footer.component';
 import { FaqComponent } from './faq/faq.component';
 import { CookieService } from 'ngx-cookie-service';
 import { MaterialModule } from './material/material.module';
- 
+  
 @NgModule({
   declarations: [ 
     AppComponent, 
@@ -58,6 +58,7 @@ import { MaterialModule } from './material/material.module';
     BrowserAnimationsModule, 
     MaterialModule, 
     NgbModule, 
+    
   ],
   exports: [
     UsersDisplayComponent,

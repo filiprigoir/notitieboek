@@ -29,8 +29,8 @@
             <input class="veld" type="text" placeholder=" Achternaam" #achternaam></p>
 
         </div>
-        <p><button class="button" mat-stroked-button color="primary"  (click)="addGebruiker(voornaam.value, achternaam.value)">Registreer</button><br>
-        <br>
+        <p><button class="button" mat-stroked-button color="primary"  (click)="addGebruiker(voornaam.value, achternaam.value)">Registreer</button><p>
+
         <span class="error" *ngIf="errorMessage"> {{errorMessage}} </span>
         <span class="succes" *ngIf="newUser"> <b>{{newUser}}</b> is succesvol ingevoegd!</span>
 </div>

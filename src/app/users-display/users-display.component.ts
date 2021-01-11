@@ -8,6 +8,7 @@ import { Paginator } from '../paginator';
 import { StatistiekenComponent } from '../statistieken/statistieken.component';
 import { UpdateUser } from '../update-user';
 import { Users } from '../users';
+import  {Platform } from '@angular/cdk/platform';
 
 @Component({
   selector: 'app-users-display',
@@ -18,12 +19,14 @@ export class UsersDisplayComponent implements OnInit {
 
   @ViewChild(StatistiekenComponent)
   private statistiekenComponent: StatistiekenComponent;
-    
+  
   users: Users[]; 
   homeLink: { title: string; url: string; };
   orderby: {text: string, name: string, sort: string, selected: boolean }[];
   geenResultaten: string;
   wait: boolean;
+
+  showButtonSort: boolean;
 
   paginator: Paginator;
   
@@ -35,7 +38,8 @@ export class UsersDisplayComponent implements OnInit {
   constructor(
     private notitielijstService: NotitielijstService,
     private modalService: NgbModal,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    public platform: Platform
     ) {
     this.users = [];
     this.actie = "";
@@ -85,6 +89,13 @@ export class UsersDisplayComponent implements OnInit {
 
       this.wait = false;
     });
+
+    if(this.platform.FIREFOX) {
+      this.showButtonSort = true;
+    }
+    else {
+      this.showButtonSort = false;
+    }
   }    
 
   RemoveUser = (user: UpdateUser) : void => {
@@ -148,22 +159,21 @@ export class UsersDisplayComponent implements OnInit {
       }
     });
   }
-   
-  getOrderBy = (name: string, sort: string) : void => { 
+    
+  getOrderBy = (orderBy: string) : void => { 
 
     this.geenResultaten = null;
-    let orderBy = name + " " + sort;
-
+ 
     if(orderBy != this.sort) {
         this.cookieService.set('sortLeden', orderBy.toString());  
-    }
-
+    } 
+ 
     this.sort = orderBy;
  
     if(this.zoekOpName === "") {
  
       this.paginator.totaleLengte = this.paginator.defaultLengte;
-  
+   
         if(this.paginator.totaleLengte > 0) { 
           this.notitielijstService.getUsers(this.sort,this.paginator.pointer,this.paginator.pageSize).subscribe((data: any[]) => {
             this.users = data;

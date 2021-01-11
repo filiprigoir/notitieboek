@@ -18,10 +18,9 @@
                     <div *ngIf="categories.length > 0; else geenCategeries">
 
                       <div *ngFor="let category of categories; let i = index">
-                        <input type="checkbox" id="cat{{category.catId}}" name="cat{{category.catId}}" value="{{category.catId}}" [checked]="category.checked" (change)="filterCategory(i, category.checked)">           
+                        <input type="checkbox" id="cat{{category.catId}}" name="cat{{category.catId}}" value="{{category.catId}}" [checked]="category.checked">           
                         <label for="cat{{category.catId}}">&nbsp;{{category.name}}</label>
-                      </div>
-              
+                      </div>             
                   </div>
 
                   <ng-template #geenCategeries>
