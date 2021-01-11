@@ -121,13 +121,16 @@ export class NotitieLijstComponent implements OnInit {
 
   filterCategory = (category: number, isChecked: boolean) : void => {
 
+    console.log(category);
+    
+
     this.geenResultaten = null;
     this.categories[category].checked = isChecked ? false : true;
     this.cookieService.set('filterCategory', this.getCategoryString());
 
     if(this.zoekOpName === "") {
       this.prepareFiliterCategory(this.paginator.pointer, this.paginator.pageSize);
-    } 
+    }  
     else {
       this.prepareFilterZoekwoord(this.paginator.pointer, this.paginator.pageSize);
     }
