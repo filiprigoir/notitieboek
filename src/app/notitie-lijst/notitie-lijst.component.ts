@@ -142,6 +142,8 @@ export class NotitieLijstComponent implements OnInit {
     this.geenResultaten = null;
     this.zoekOpName = zoekwoord;
     this.choice = choice;
+
+    this.cookieService.set('zoekIn', choice);
   
     this.prepareFilterZoekwoord(this.paginator.pointer, this.paginator.pageSize);
   } 
